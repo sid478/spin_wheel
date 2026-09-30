@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'lib/src/widgets/spin_wheel.dart';

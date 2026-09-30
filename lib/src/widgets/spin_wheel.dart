@@ -583,18 +583,10 @@ class _SpinWheelPainter<T> extends CustomPainter {
       ringPaint.shader = theme.outerRingGradient!.createShader(
         Rect.fromCircle(center: center, radius: radius),
       );
-    } else if (theme.outerRingColor != null) {
-      ringPaint.color = theme.outerRingColor!;
     } else {
-      ringPaint.shader = const SweepGradient(
-        colors: [
-          Color(0xFF4FC3F7),
-          Color(0xFF01579B),
-        ],
-      ).createShader(
-        Rect.fromCircle(center: center, radius: radius),
-      );
+      ringPaint.color = theme.outerRingColor;
     }
+
 
     canvas.drawCircle(
       center,
@@ -621,7 +613,7 @@ class _SpinWheelPainter<T> extends CustomPainter {
           : 1.0 - blinkAnimation.value;
       
       final lightPaint = Paint()
-        ..color = Colors.white.withOpacity(0.3 + (opacity * 0.6));
+        ..color = Colors.white.withValues(alpha: 0.3 + (opacity * 0.6));
 
       if (outerRingDecoration == SpinWheelOuterRingDecoration.bulb) {
         canvas.drawCircle(point, lightRadius, lightPaint);
