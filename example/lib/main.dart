@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:company_spin_wheel/company_spin_wheel.dart';
+import 'package:fortune_spin_wheel/fortune_spin_wheel.dart';
 
 void main() {
   runApp(const ExampleApp());

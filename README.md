@@ -1,4 +1,4 @@
-# Company Spin Wheel
+# Fortune Spin Wheel
 
 A reusable, highly customizable Flutter spin wheel for internal company apps.
 
@@ -120,7 +120,7 @@ SpinWheel(
 
 ```text
 lib/
-  company_spin_wheel.dart
+  fortune_spin_wheel.dart
   src/
     controller/
       spin_wheel_controller.dart
