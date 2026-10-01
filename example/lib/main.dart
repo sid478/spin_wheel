@@ -55,9 +55,9 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
               // ),
               // marker:  Image.asset(),
               // marker: Icon(Icons.arrow_downward_sharp, size: 60, color: Colors.blueAccent)
-              markerSize: 60,
-              spinButtonColor: Colors.blueAccent,
-              maxSpinCount: 4,
+              markerSize: 70,
+              spinButtonColor: Colors.red,
+              maxSpinCount: 1,
               wheelSize: 360,
               items: items,
               outerSemiCircleCount: 20,

@@ -170,7 +170,7 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
 
   void _attachController() {
     _controller = widget.controller ?? SpinWheelController(maxSpins: widget.maxSpinCount);
-    if (widget.controller != null && widget.controller!.maxSpins == null) {
+    if (widget.controller != null && widget.maxSpinCount != null) {
       widget.controller!.maxSpins = widget.maxSpinCount;
     }
     _controller!.addListener(_onControllerChanged);

@@ -5,16 +5,16 @@ import 'package:flutter/foundation.dart';
 class SpinWheelController extends ChangeNotifier {
   SpinWheelController({
     int? maxSpins,
-  }) : _maxSpins = maxSpins;
+  }) : _maxSpins = maxSpins ?? 0;
 
-  /// null = unlimited.
-  int? _maxSpins;
+  int _maxSpins;
   
-  int? get maxSpins => _maxSpins;
+  int get maxSpins => _maxSpins;
   
   set maxSpins(int? value) {
-    if (_maxSpins != value) {
-      _maxSpins = value;
+    final newValue = value ?? 0;
+    if (_maxSpins != newValue) {
+      _maxSpins = newValue;
       notifyListeners();
     }
   }
@@ -23,11 +23,11 @@ class SpinWheelController extends ChangeNotifier {
   bool _isSpinning = false;
 
   int get spinCount => _spinCount;
-  int? get remainingSpins =>
-      maxSpins == null ? null : (maxSpins! - _spinCount).clamp(0, maxSpins!);
+  int get remainingSpins =>
+      (_maxSpins - _spinCount).clamp(0, _maxSpins);
   bool get isSpinning => _isSpinning;
   bool get canSpin =>
-      !_isSpinning && (maxSpins == null || _spinCount < maxSpins!);
+      !_isSpinning && _spinCount < _maxSpins;
 
   void _setSpinning(bool value) {
     _isSpinning = value;

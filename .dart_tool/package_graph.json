@@ -1,10 +1,10 @@
 {
   "roots": [
-    "company_spin_wheel"
+    "fortune_spin_wheel"
   ],
   "packages": [
     {
-      "name": "company_spin_wheel",
+      "name": "fortune_spin_wheel",
       "version": "0.1.0",
       "dependencies": [
         "confetti",

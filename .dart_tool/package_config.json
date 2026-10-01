@@ -164,7 +164,7 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "company_spin_wheel",
+      "name": "fortune_spin_wheel",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.7"

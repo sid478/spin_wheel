@@ -41,13 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.1"
-  company_spin_wheel:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.1.0"
   confetti:
     dependency: transitive
     description:
@@ -90,6 +83,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fortune_spin_wheel:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.1.0"
   leak_tracker:
     dependency: transitive
     description:
