@@ -141,4 +141,6 @@ lib/
 
 ## Developed By
 
-![Developer](doc/developer.png)
+![Siddharth Raj](doc/developer.png)
+
+**Siddharth Raj**
