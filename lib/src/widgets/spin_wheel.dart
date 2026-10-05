@@ -10,19 +10,23 @@ import '../theme/spin_wheel_theme.dart';
 import 'spin_wheel_marker.dart';
 import 'winner_overlay.dart';
 
+/// A builder function for the custom winner overlay.
 typedef WinnerOverlayBuilder<T> = Widget Function(
   BuildContext context,
   SpinItem<T> item,
   int index,
 );
 
+/// Defines the type of decoration for the outer ring.
 enum SpinWheelOuterRingDecoration {
   bulb,
   star,
   semicircle,
 }
 
+/// A highly customizable Flutter widget that displays an interactive spin wheel.
 class SpinWheel<T> extends StatefulWidget {
+  /// Creates a new [SpinWheel].
   const SpinWheel({
     super.key,
     required this.items,

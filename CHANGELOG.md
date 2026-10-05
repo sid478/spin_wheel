@@ -1,3 +1,12 @@
+## 0.1.4
+
+* Improve public API documentation.
+* Merge repository branches to fix pub.dev checks.
+
+## 0.1.3
+
+* Miscellaneous fixes and updates.
+
 ## 0.1.2
 
 * Fix broken image links in README.

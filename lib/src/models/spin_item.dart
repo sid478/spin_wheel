@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// A model representing a single segment on the spin wheel.
 class SpinItem<T> {
+  /// Creates a new [SpinItem].
   const SpinItem({
     required this.label,
     this.id,
@@ -13,7 +15,10 @@ class SpinItem<T> {
     this.weight = 1,
   });
 
+  /// The text displayed on this segment.
   final String label;
+  
+  /// An optional unique identifier for this item.
   final dynamic id;
 
   /// Business value returned to the host application.
@@ -22,9 +27,16 @@ class SpinItem<T> {
   /// Optional image displayed inside the segment.
   final ImageProvider? image;
 
+  /// The background color for this segment. If null, a theme color is used.
   final Color? backgroundColor;
+
+  /// The background gradient for this segment. Overrides [backgroundColor] if provided.
   final Gradient? backgroundGradient;
+
+  /// The text color for the [label]. If null, a theme color is used.
   final Color? textColor;
+
+  /// The text style for the [label]. Overrides [textColor] if provided.
   final TextStyle? textStyle;
 
   /// Useful if you later add package-level weighted random selection.
