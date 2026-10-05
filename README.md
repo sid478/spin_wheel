@@ -1,7 +1,7 @@
 # Fortune Spin Wheel
 
-![Demo 1](https://raw.githubusercontent.com/sid478/spin_wheel/main/doc/spin1.gif)
-![Demo 2](https://raw.githubusercontent.com/sid478/spin_wheel/main/doc/spin_design2.gif)
+![Demo 1](https://raw.githubusercontent.com/sid478/spin_wheel/development/doc/spin1.gif)
+![Demo 2](https://raw.githubusercontent.com/sid478/spin_wheel/development/doc/spin_design2.gif)
 
 A reusable, highly customizable Flutter spin wheel for internal company apps.
 
@@ -141,6 +141,6 @@ lib/
 
 ## Developed By
 
-![Siddharth Raj](https://raw.githubusercontent.com/sid478/spin_wheel/main/doc/developer.png)
+![Siddharth Raj](https://raw.githubusercontent.com/sid478/spin_wheel/development/doc/developer.png)
 
 **Siddharth Raj**
