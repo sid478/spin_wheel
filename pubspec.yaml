@@ -8,6 +8,7 @@ environment:
   flutter: ">=3.29.0"
 
 dependencies:
+  auto_size_text: ^3.0.0
   confetti: ^0.8.0
   flutter:
     sdk: flutter

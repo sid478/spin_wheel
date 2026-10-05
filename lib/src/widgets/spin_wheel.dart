@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
@@ -11,18 +12,11 @@ import 'spin_wheel_marker.dart';
 import 'winner_overlay.dart';
 
 /// A builder function for the custom winner overlay.
-typedef WinnerOverlayBuilder<T> = Widget Function(
-  BuildContext context,
-  SpinItem<T> item,
-  int index,
-);
+typedef WinnerOverlayBuilder<T> =
+    Widget Function(BuildContext context, SpinItem<T> item, int index);
 
 /// Defines the type of decoration for the outer ring.
-enum SpinWheelOuterRingDecoration {
-  bulb,
-  star,
-  semicircle,
-}
+enum SpinWheelOuterRingDecoration { bulb, star, semicircle }
 
 /// A highly customizable Flutter widget that displays an interactive spin wheel.
 class SpinWheel<T> extends StatefulWidget {
@@ -103,13 +97,15 @@ class SpinWheel<T> extends StatefulWidget {
   final double? spinButtonWidth;
   final double? spinButtonHeight;
   final double spinButtonBorderRadius;
-  
-  /// Callback when the spin button is tapped. 
+
+  /// Callback when the spin button is tapped.
   /// Return the target index or id you want the wheel to stop at (e.g., from an API response).
   final FutureOr<dynamic> Function()? onSpinButtonTap;
-  
-  final Widget Function(BuildContext context, SpinWheelController controller)? spinCountBuilder;
-  final Widget Function(BuildContext context, SpinWheelController controller)? spinButtonBuilder;
+
+  final Widget Function(BuildContext context, SpinWheelController controller)?
+  spinCountBuilder;
+  final Widget Function(BuildContext context, SpinWheelController controller)?
+  spinButtonBuilder;
 
   final VoidCallback? playSpinSound;
   final VoidCallback? playWinSound;
@@ -154,7 +150,9 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
       duration: const Duration(milliseconds: 600),
     )..repeat(reverse: true);
     if (widget.showConfetti) {
-      _confettiController = ConfettiController(duration: const Duration(seconds: 3));
+      _confettiController = ConfettiController(
+        duration: const Duration(seconds: 3),
+      );
     }
     _attachController();
   }
@@ -173,7 +171,8 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
   }
 
   void _attachController() {
-    _controller = widget.controller ?? SpinWheelController(maxSpins: widget.maxSpinCount);
+    _controller =
+        widget.controller ?? SpinWheelController(maxSpins: widget.maxSpinCount);
     if (widget.controller != null && widget.maxSpinCount != null) {
       widget.controller!.maxSpins = widget.maxSpinCount;
     }
@@ -187,7 +186,7 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
   void _onControllerChanged() {
     final controller = _controller;
     if (controller == null) return;
-    
+
     if (controller.consumeReset()) {
       if (mounted) {
         _animationController.reset();
@@ -202,17 +201,20 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
     if (controller.requestId == _lastRequestId) return;
 
     _lastRequestId = controller.requestId;
-    
+
     int? resolvedIndex = controller.consumeTargetIndex();
     final targetId = controller.consumeTargetId();
-    
+
     if (targetId != null) {
-      final indexFromId = widget.items.indexWhere((item) => item.id == targetId);
+      final indexFromId = widget.items.indexWhere(
+        (item) => item.id == targetId,
+      );
       if (indexFromId != -1) {
         resolvedIndex = indexFromId;
       } else {
         final betterLuckIndex = widget.items.indexWhere(
-            (item) => item.label.toLowerCase().contains('better'));
+          (item) => item.label.toLowerCase().contains('better'),
+        );
         if (betterLuckIndex != -1) {
           resolvedIndex = betterLuckIndex;
         }
@@ -299,21 +301,14 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
       barrierColor: Colors.transparent,
       transitionDuration: const Duration(milliseconds: 250),
       pageBuilder: (_, __, ___) {
-        return winnerPopupBuilder(
-          context,
-          item,
-          index,
-        );
+        return winnerPopupBuilder(context, item, index);
       },
       transitionBuilder: (_, animation, __, child) {
         return FadeTransition(
           opacity: animation,
           child: ScaleTransition(
             scale: Tween<double>(begin: .8, end: 1).animate(
-              CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeOutBack,
-              ),
+              CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
             ),
             child: child,
           ),
@@ -322,23 +317,23 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
     );
   }
 
-  Widget winnerPopupBuilder(
-    BuildContext context,
-    SpinItem<T> item,
-    int index,
-  ) {
+  Widget winnerPopupBuilder(BuildContext context, SpinItem<T> item, int index) {
     final isBetterLuck = item.label.toLowerCase().contains('better');
-    
+
     return widget.winnerPopupBuilder?.call(context, item, index) ??
         DefaultWinnerOverlay<T>(
           item: item,
           index: index,
           title: isBetterLuck ? 'Oops!' : widget.winnerPopupTitle,
-          icon: isBetterLuck ? Icons.sentiment_dissatisfied_rounded : Icons.celebration_rounded,
+          icon:
+              isBetterLuck
+                  ? Icons.sentiment_dissatisfied_rounded
+                  : Icons.celebration_rounded,
           buttonText: widget.winnerPopupButtonText,
-          onButtonTap: widget.onWinnerPopupButtonTap == null
-              ? null
-              : () => widget.onWinnerPopupButtonTap!(item, index),
+          onButtonTap:
+              widget.onWinnerPopupButtonTap == null
+                  ? null
+                  : () => widget.onWinnerPopupButtonTap!(item, index),
         );
   }
 
@@ -391,21 +386,19 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
                   textRadiusFactor: widget.textRadiusFactor,
                 ),
                 child: Center(
-                  child: widget.showCenterButton
-                      ? (widget.centerBuilder ??
-                          _DefaultCenter(
-                            color: widget.theme.centerColor,
-                            borderColor: widget.theme.centerBorderColor,
-                            borderWidth: widget.theme.centerBorderWidth,
-                          ))
-                      : const SizedBox.shrink(),
+                  child:
+                      widget.showCenterButton
+                          ? (widget.centerBuilder ??
+                              _DefaultCenter(
+                                color: widget.theme.centerColor,
+                                borderColor: widget.theme.centerBorderColor,
+                                borderWidth: widget.theme.centerBorderWidth,
+                              ))
+                          : const SizedBox.shrink(),
                 ),
               ),
             ),
-            Positioned(
-              top: -widget.markerSize * .10,
-              child: widget.marker,
-            ),
+            Positioned(top: -widget.markerSize * .10, child: widget.marker),
           ],
         ),
       ),
@@ -419,65 +412,70 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
         mainAxisSize: MainAxisSize.min,
         children: [
           wheel,
-        if (widget.showSpinCount) ...[
-          const SizedBox(height: 20),
-          AnimatedBuilder(
-            animation: _controller!,
-            builder: (context, _) {
-              if (widget.spinCountBuilder != null) {
-                return widget.spinCountBuilder!(context, _controller!);
-              }
-              return Text(
-                'Spins: ${_controller!.spinCount} / ${_controller!.maxSpins}',
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              );
-            },
-          ),
-        ],
-        if (widget.showSpinButton) ...[
-          const SizedBox(height: 12),
-          AnimatedBuilder(
-            animation: _controller!,
-            builder: (context, _) {
-              if (widget.spinButtonBuilder != null) {
-                return widget.spinButtonBuilder!(context, _controller!);
-              }
-              return SizedBox(
-                width: widget.spinButtonWidth,
-                height: widget.spinButtonHeight,
-                child: FilledButton(
-                  style: widget.spinButtonStyle ??
-                      FilledButton.styleFrom(
-                        backgroundColor: widget.spinButtonColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(widget.spinButtonBorderRadius),
+          if (widget.showSpinCount) ...[
+            const SizedBox(height: 20),
+            AnimatedBuilder(
+              animation: _controller!,
+              builder: (context, _) {
+                if (widget.spinCountBuilder != null) {
+                  return widget.spinCountBuilder!(context, _controller!);
+                }
+                return Text(
+                  'Spins: ${_controller!.spinCount} / ${_controller!.maxSpins}',
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                );
+              },
+            ),
+          ],
+          if (widget.showSpinButton) ...[
+            const SizedBox(height: 12),
+            AnimatedBuilder(
+              animation: _controller!,
+              builder: (context, _) {
+                if (widget.spinButtonBuilder != null) {
+                  return widget.spinButtonBuilder!(context, _controller!);
+                }
+                return SizedBox(
+                  width: widget.spinButtonWidth,
+                  height: widget.spinButtonHeight,
+                  child: FilledButton(
+                    style:
+                        widget.spinButtonStyle ??
+                        FilledButton.styleFrom(
+                          backgroundColor: widget.spinButtonColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              widget.spinButtonBorderRadius,
+                            ),
+                          ),
                         ),
-                      ),
-                  onPressed: _controller!.canSpin
-                      ? () async {
-                          if (widget.onSpinButtonTap != null) {
-                              try {
-                                final result = await widget.onSpinButtonTap!();
-                                _controller!.spin(targetId: result);
-                              } catch (e) {
-                              // If the user's Future throws (e.g. API fails), we do nothing.
+                    onPressed:
+                        _controller!.canSpin
+                            ? () async {
+                              if (widget.onSpinButtonTap != null) {
+                                try {
+                                  final result =
+                                      await widget.onSpinButtonTap!();
+                                  _controller!.spin(targetId: result);
+                                } catch (e) {
+                                  // If the user's Future throws (e.g. API fails), we do nothing.
+                                }
+                              } else {
+                                _handleTap();
+                              }
                             }
-                          } else {
-                            _handleTap();
-                          }
-                        }
-                      : null,
-                  child: Text(
-                    widget.spinButtonText,
-                    style: widget.spinButtonTextStyle,
+                            : null,
+                    child: Text(
+                      widget.spinButtonText,
+                      style: widget.spinButtonTextStyle,
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              },
+            ),
+          ],
         ],
-      ],
-    );
+      );
     }
 
     if (!widget.showConfetti || _confettiController == null) {
@@ -527,16 +525,8 @@ class _DefaultCenter extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: color,
-        border: Border.all(
-          color: borderColor,
-          width: 1.0,
-        ),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 2,
-            color: Colors.black26,
-          ),
-        ],
+        border: Border.all(color: borderColor, width: 1.0),
+        boxShadow: const [BoxShadow(blurRadius: 2, color: Colors.black26)],
       ),
       child: const Icon(
         Icons.star_border_purple500,
@@ -591,7 +581,6 @@ class _SpinWheelPainter<T> extends CustomPainter {
       ringPaint.color = theme.outerRingColor;
     }
 
-
     canvas.drawCircle(
       center,
       radius, // Fixed! It should fill the entire radius to form the full thick border.
@@ -612,12 +601,12 @@ class _SpinWheelPainter<T> extends CustomPainter {
 
       // Blinking effect: odd indices blink out of phase with even indices
       final bool isEven = i % 2 == 0;
-      final double opacity = isEven 
-          ? blinkAnimation.value 
-          : 1.0 - blinkAnimation.value;
-      
-      final lightPaint = Paint()
-        ..color = Colors.white.withValues(alpha: 0.3 + (opacity * 0.6));
+      final double opacity =
+          isEven ? blinkAnimation.value : 1.0 - blinkAnimation.value;
+
+      final lightPaint =
+          Paint()
+            ..color = Colors.white.withValues(alpha: 0.3 + (opacity * 0.6));
 
       if (outerRingDecoration == SpinWheelOuterRingDecoration.bulb) {
         canvas.drawCircle(point, lightRadius, lightPaint);
@@ -641,8 +630,7 @@ class _SpinWheelPainter<T> extends CustomPainter {
         }
         path.close();
         canvas.drawPath(path, lightPaint);
-      }
-      else {
+      } else {
         // Draw semicircle pointing outwards
         final path = Path();
         path.arcTo(
@@ -665,10 +653,11 @@ class _SpinWheelPainter<T> extends CustomPainter {
       final start = rotation - math.pi / 2 + i * sweep;
 
       final fill = Paint()..style = PaintingStyle.fill;
-      
-      final gradient = item.backgroundGradient ?? 
-          (theme.segmentGradients != null && theme.segmentGradients!.isNotEmpty 
-              ? theme.segmentGradients![i % theme.segmentGradients!.length] 
+
+      final gradient =
+          item.backgroundGradient ??
+          (theme.segmentGradients != null && theme.segmentGradients!.isNotEmpty
+              ? theme.segmentGradients![i % theme.segmentGradients!.length]
               : null);
 
       if (gradient != null) {
@@ -676,7 +665,8 @@ class _SpinWheelPainter<T> extends CustomPainter {
           Rect.fromCircle(center: center, radius: segmentRadius),
         );
       } else {
-        fill.color = item.backgroundColor ?? theme.colors[i % theme.colors.length];
+        fill.color =
+            item.backgroundColor ?? theme.colors[i % theme.colors.length];
       }
 
       canvas.drawArc(
@@ -688,10 +678,11 @@ class _SpinWheelPainter<T> extends CustomPainter {
       );
 
       if (showDividers) {
-        final divider = Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = theme.dividerWidth
-          ..color = theme.dividerColor;
+        final divider =
+            Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = theme.dividerWidth
+              ..color = theme.dividerColor;
 
         canvas.drawArc(
           Rect.fromCircle(center: center, radius: segmentRadius),
@@ -729,31 +720,49 @@ class _SpinWheelPainter<T> extends CustomPainter {
       );
     }
 
-    final textStyle = item.textStyle ??
+    final textStyle =
+        item.textStyle ??
         theme.textStyle.copyWith(
           color: item.textColor ?? theme.textStyle.color,
         );
+    double fontSize = textStyle.fontSize ?? 14;
 
-    final painter = TextPainter(
-      text: TextSpan(
-        text: item.label,
-        style: textStyle,
-      ),
-      textAlign: TextAlign.center,
-      maxLines: 3,
-      ellipsis: '...',
-      textDirection: TextDirection.ltr,
-    )..layout(
-        maxWidth: radius * .48,
-      );
+    TextPainter painter;
 
+    do {
+      painter = TextPainter(
+        text: TextSpan(
+          text: item.label,
+          style: textStyle.copyWith(fontSize: fontSize),
+        ),
+        textAlign: TextAlign.center,
+        maxLines: 5,
+        textDirection: TextDirection.ltr,
+      )..layout(maxWidth: radius * .48);
+
+      if (painter.didExceedMaxLines) {
+        fontSize -= 1;
+      }
+    } while (painter.didExceedMaxLines && fontSize > 8);
+    // final painter = TextPainter(
+    //   text:    AutoSizeText(
+    //
+    //   ),
+    //   // TextSpan(
+    //   //   text: item.label,
+    //   //   style: textStyle,
+    //   // ),
+    //   textAlign: TextAlign.center,
+    //   maxLines: 5,
+    //   // ellipsis: '...',
+    //   textDirection: TextDirection.ltr,
+    // )..layout(
+    //     maxWidth: radius * .48,
+    //   );
     canvas.save();
     canvas.translate(textCenter.dx, textCenter.dy);
     canvas.rotate(angle + math.pi / 2);
-    painter.paint(
-      canvas,
-      Offset(-painter.width / 2, -painter.height / 2),
-    );
+    painter.paint(canvas, Offset(-painter.width / 2, -painter.height / 2));
     canvas.restore();
   }
 
@@ -769,9 +778,10 @@ class _SpinWheelPainter<T> extends CustomPainter {
     final paint = Paint()..color = Colors.white.withValues(alpha: .92);
     canvas.drawCircle(center, radius, paint);
 
-    final iconPaint = Paint()
-      ..color = item.textColor ?? Colors.black54
-      ..style = PaintingStyle.fill;
+    final iconPaint =
+        Paint()
+          ..color = item.textColor ?? Colors.black54
+          ..style = PaintingStyle.fill;
 
     canvas.drawCircle(center, radius * .45, iconPaint);
   }

@@ -64,20 +64,20 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
               showOuterSemiCircle: true,
               outerRingDecoration: SpinWheelOuterRingDecoration.star,
               theme: const SpinWheelTheme(
-                // segmentGradients: const [
-                //   // RadialGradient(colors: [Color(0xFFFFD54F), Color(0xFFFF8F00)]), // Yellow 3D
-                //   // RadialGradient(colors: [Color(0xFF81D4FA), Color(0xFF0277BD)]), // Light Blue 3D
-                //   // RadialGradient(colors: [Color(0xFFF48FB1), Color(0xFFC2185B)]), // Pink 3D
-                //   // RadialGradient(colors: [Color(0xFF4FC3F7), Color(0xFF01579B)]), // Dark Blue 3D
-                //   // RadialGradient(colors: [Color(0xFFF8BBD0), Color(0xFFD81B60)]), // Light Pink 3D
-                //   // RadialGradient(colors: [Color(0xFFE57373), Color(0xFFC62828)]), // Red 3D
-                // ],
-                // outerRingGradient: SweepGradient(
-                //   colors: [
-                //     // Colors.purple,
-                //     // Colors.deepPurple,
-                //   ],
-                // ),
+                segmentGradients: const [
+                  RadialGradient(colors: [Color(0xFFFFD54F), Color(0xFFFF8F00)]), // Yellow 3D
+                  RadialGradient(colors: [Color(0xFF81D4FA), Color(0xFF0277BD)]), // Light Blue 3D
+                  RadialGradient(colors: [Color(0xFFF48FB1), Color(0xFFC2185B)]), // Pink 3D
+                  RadialGradient(colors: [Color(0xFF4FC3F7), Color(0xFF01579B)]), // Dark Blue 3D
+                  RadialGradient(colors: [Color(0xFFF8BBD0), Color(0xFFD81B60)]), // Light Pink 3D
+                  RadialGradient(colors: [Color(0xFFE57373), Color(0xFFC62828)]), // Red 3D
+                ],
+                outerRingGradient: SweepGradient(
+                  colors: [
+                    Colors.purple,
+                    Colors.deepPurple,
+                  ],
+                ),
                 // outerRingWidth: 24, // Increased width
               ),
 
