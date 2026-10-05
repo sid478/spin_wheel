@@ -8,6 +8,7 @@ class SpinItem<T> {
     this.id,
     this.value,
     this.image,
+    this.imageSize,
     this.backgroundColor,
     this.backgroundGradient,
     this.textColor,
@@ -25,7 +26,10 @@ class SpinItem<T> {
   final T? value;
 
   /// Optional image displayed inside the segment.
-  final ImageProvider? image;
+  final String? image;
+
+  /// Optional size of the image. Defaults to 40 if not provided.
+  final double? imageSize;
 
   /// The background color for this segment. If null, a theme color is used.
   final Color? backgroundColor;
@@ -46,7 +50,8 @@ class SpinItem<T> {
     String? label,
     dynamic id,
     T? value,
-    ImageProvider? image,
+    String? image,
+    double? imageSize,
     Color? backgroundColor,
     Gradient? backgroundGradient,
     Color? textColor,
@@ -58,6 +63,7 @@ class SpinItem<T> {
       id: id ?? this.id,
       value: value ?? this.value,
       image: image ?? this.image,
+      imageSize: imageSize ?? this.imageSize,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       backgroundGradient: backgroundGradient ?? this.backgroundGradient,
       textColor: textColor ?? this.textColor,

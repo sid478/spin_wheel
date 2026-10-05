@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:math' as math;
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
@@ -59,10 +57,11 @@ class SpinWheel<T> extends StatefulWidget {
     this.onSpinEnd,
     this.autoSpinOnTap = true,
     this.enableTapToSpin = true,
-    this.outerRingDecoration = SpinWheelOuterRingDecoration.bulb,
-    this.outerSemiCircleCount = 18,
-    this.showOuterSemiCircle = true,
+    this.outerRingDecoration = SpinWheelOuterRingDecoration.star,
+    this.outerBlinkerCount = 18,
+    this.showBlinkDecoration = true,
     this.showDividers = true,
+    this.giftImageSize = 40.0,
     this.imageSizeFactor = .22,
     this.textRadiusFactor = .64,
   }) : assert(items.length >= 2, 'SpinWheel requires at least 2 items.');
@@ -73,6 +72,8 @@ class SpinWheel<T> extends StatefulWidget {
   final SpinWheelTheme theme;
   final Widget marker;
   final double markerSize;
+  
+  final double giftImageSize;
 
   final double? wheelSize;
   final Duration spinDuration;
@@ -117,8 +118,8 @@ class SpinWheel<T> extends StatefulWidget {
   final bool enableTapToSpin;
 
   final SpinWheelOuterRingDecoration outerRingDecoration;
-  final int outerSemiCircleCount;
-  final bool showOuterSemiCircle;
+  final int outerBlinkerCount;
+  final bool showBlinkDecoration;
   final bool showDividers;
 
   final double imageSizeFactor;
@@ -378,23 +379,79 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
                   theme: widget.theme,
                   rotation: _rotation,
                   showDividers: widget.showDividers,
-                  showOuterSemiCircleRing: widget.showOuterSemiCircle,
-                  outerSemiCircleCount: widget.outerSemiCircleCount,
+                  showOuterSemiCircleRing: widget.showBlinkDecoration,
+                  outerSemiCircleCount: widget.outerBlinkerCount,
                   outerRingDecoration: widget.outerRingDecoration,
                   blinkAnimation: _blinkController,
                   imageSizeFactor: widget.imageSizeFactor,
                   textRadiusFactor: widget.textRadiusFactor,
                 ),
-                child: Center(
-                  child:
-                      widget.showCenterButton
-                          ? (widget.centerBuilder ??
-                              _DefaultCenter(
-                                color: widget.theme.centerColor,
-                                borderColor: widget.theme.centerBorderColor,
-                                borderWidth: widget.theme.centerBorderWidth,
-                              ))
-                          : const SizedBox.shrink(),
+                child: Stack(
+                  children: [
+                    ...widget.items.asMap().entries.where((e) => e.value.image != null).map((e) {
+                      final i = e.key;
+                      final item = e.value;
+                      final radius = size / 2;
+                      final sweep = 2 * math.pi / widget.items.length;
+                      final angle = _rotation - math.pi / 2 + i * sweep + sweep / 2;
+                      
+                      final imageSize = item.imageSize ?? widget.giftImageSize;
+                      // Place the image below the text (radially closer to the center)
+                      // Text is centered at radius * textRadiusFactor.
+                      // We subtract a dynamic offset based on the image size and text height.
+                      final double imageRadiusOffset = radius * widget.textRadiusFactor - (25.0 + imageSize / 2);
+                      
+                      final imageCenter = Offset(
+                        radius + imageRadiusOffset * math.cos(angle),
+                        radius + imageRadiusOffset * math.sin(angle),
+                      );
+
+                      return Positioned(
+                        left: imageCenter.dx - imageSize / 2,
+                        top: imageCenter.dy - imageSize / 2,
+                        width: imageSize,
+                        height: imageSize,
+                        child: Transform.rotate(
+                          angle: angle + math.pi / 2,
+                          child: Builder(builder: (context) {
+                            final imagePath = item.image!;
+                            final isNetwork = imagePath.startsWith('http');
+                            Widget errorBuilder(BuildContext context, Object error, StackTrace? stackTrace) {
+                              return const Icon(
+                                Icons.image_not_supported_rounded,
+                                color: Colors.grey,
+                              );
+                            }
+
+                            if (isNetwork) {
+                              return Image.network(
+                                imagePath,
+                                fit: BoxFit.contain,
+                                errorBuilder: errorBuilder,
+                              );
+                            } else {
+                              return Image.asset(
+                                imagePath,
+                                fit: BoxFit.contain,
+                                errorBuilder: errorBuilder,
+                              );
+                            }
+                          }),
+                        ),
+                      );
+                    }),
+                    Center(
+                      child:
+                          widget.showCenterButton
+                              ? (widget.centerBuilder ??
+                                  _DefaultCenter(
+                                    color: widget.theme.centerColor,
+                                    borderColor: widget.theme.centerBorderColor,
+                                    borderWidth: widget.theme.centerBorderWidth,
+                                  ))
+                              : const SizedBox.shrink(),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -711,14 +768,8 @@ class _SpinWheelPainter<T> extends CustomPainter {
       center.dy + radius * textRadiusFactor * math.sin(angle),
     );
 
-    if (item.image != null) {
-      _drawImagePlaceholder(
-        canvas,
-        textCenter.translate(0, -radius * .10),
-        radius * imageSizeFactor,
-        item,
-      );
-    }
+    // Image rendering is now handled by a Stack over the CustomPaint
+    // to properly support arbitrary ImageProviders.
 
     final textStyle =
         item.textStyle ??
@@ -736,9 +787,9 @@ class _SpinWheelPainter<T> extends CustomPainter {
           style: textStyle.copyWith(fontSize: fontSize),
         ),
         textAlign: TextAlign.center,
-        maxLines: 5,
+        maxLines: 3,
         textDirection: TextDirection.ltr,
-      )..layout(maxWidth: radius * .48);
+      )..layout(maxWidth: radius * .78);
 
       if (painter.didExceedMaxLines) {
         fontSize -= 1;
@@ -762,28 +813,8 @@ class _SpinWheelPainter<T> extends CustomPainter {
     canvas.save();
     canvas.translate(textCenter.dx, textCenter.dy);
     canvas.rotate(angle + math.pi / 2);
-    painter.paint(canvas, Offset(-painter.width / 2, -painter.height / 2));
+    painter.paint(canvas, Offset(-painter.width / 2, -painter.height / 1.2));
     canvas.restore();
-  }
-
-  void _drawImagePlaceholder(
-    Canvas canvas,
-    Offset center,
-    double radius,
-    SpinItem<T> item,
-  ) {
-    // CustomPainter cannot synchronously resolve arbitrary ImageProviders.
-    // The package intentionally keeps painting synchronous. A production
-    // implementation can add an ImageStream cache here.
-    final paint = Paint()..color = Colors.white.withValues(alpha: .92);
-    canvas.drawCircle(center, radius, paint);
-
-    final iconPaint =
-        Paint()
-          ..color = item.textColor ?? Colors.black54
-          ..style = PaintingStyle.fill;
-
-    canvas.drawCircle(center, radius * .45, iconPaint);
   }
 
   @override

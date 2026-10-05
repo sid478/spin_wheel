@@ -26,14 +26,32 @@ class SpinDemoPage extends StatefulWidget {
 
 class _SpinDemoPageState extends State<SpinDemoPage> {
   final controller = SpinWheelController();
-  final List<SpinItem<String>> items = const [
-    SpinItem<String>(id: 1, label: '400\nPoints'),
-    SpinItem<String>(id: 2, label: 'INR 100\nAmazon Pay\nGift Card'),
-    SpinItem<String>(id: 3, label: 'Better Luck Next Time'),
-    SpinItem<String>(id: 4, label: '100\nPoints'),
-    SpinItem<String>(id: 5, label: '200\nAmazon Gift Card'),
+  final List<SpinItem<String>> items = [
+    const SpinItem<String>(
+      id: 1,
+      label: '400 Points',
+      image: 'https://cdn-icons-png.flaticon.com/512/4213/4213654.png',
+    ),
+    const SpinItem<String>(
+      id: 2,
+      label: 'INR 100 Amazon Pay Gift Card',
+      image: 'https://cdn-icons-png.flaticon.com/512/4228/4228674.png',
+    ),
+    //
+    const SpinItem<String>(id: 3, label: 'Better Luck Next Time',
+      // image: 'https://cdn-icons-png.flaticon.com/512/4213/4213650.png',
+    ),
+    const SpinItem<String>(
+      id: 4,
+      label: '100 Points',
+      image: 'https://cdn-icons-png.flaticon.com/512/4228/4228674.png',
+    ),
 
-    // SpinItem<String>(id: 6, label: 'Better Luck\nNext Time'),
+    const SpinItem<String>(
+      id: 5,
+      label: '200 Amazon Gift Card',
+      image: 'https://cdn-icons-png.flaticon.com/512/4228/4228674.png',
+    ),
   ];
 
   @override
@@ -46,7 +64,19 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SpinWheel<String>(
+              showSpinButton: false,
+              showSpinCount: false,
               controller: controller,
+              showDividers: false,
+              giftImageSize: 40.0,
+              markerSize: 70,
+              spinButtonColor: Colors.red,
+              maxSpinCount: 1,
+              wheelSize: 390,
+              items: items,
+              outerBlinkerCount: 30,
+              showBlinkDecoration: true,
+              outerRingDecoration: SpinWheelOuterRingDecoration.star,
               // marker: SpinWheelMarker(
               //   type: SpinMarkerType.pin,
               //   color: Colors.red,
@@ -55,34 +85,25 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
               // ),
               // marker:  Image.asset(),
               // marker: Icon(Icons.arrow_downward_sharp, size: 60, color: Colors.blueAccent)
-              markerSize: 70,
-              spinButtonColor: Colors.red,
-              maxSpinCount: 1,
-              wheelSize: 360,
-              items: items,
-              outerSemiCircleCount: 20,
-              showOuterSemiCircle: true,
-              outerRingDecoration: SpinWheelOuterRingDecoration.star,
-              theme: const SpinWheelTheme(
-                segmentGradients: const [
-                  RadialGradient(colors: [Color(0xFFFFD54F), Color(0xFFFF8F00)]), // Yellow 3D
-                  RadialGradient(colors: [Color(0xFF81D4FA), Color(0xFF0277BD)]), // Light Blue 3D
-                  RadialGradient(colors: [Color(0xFFF48FB1), Color(0xFFC2185B)]), // Pink 3D
-                  RadialGradient(colors: [Color(0xFF4FC3F7), Color(0xFF01579B)]), // Dark Blue 3D
-                  RadialGradient(colors: [Color(0xFFF8BBD0), Color(0xFFD81B60)]), // Light Pink 3D
-                  RadialGradient(colors: [Color(0xFFE57373), Color(0xFFC62828)]), // Red 3D
-                ],
-                outerRingGradient: SweepGradient(
-                  colors: [
-                    Colors.purple,
-                    Colors.deepPurple,
-                  ],
-                ),
-                // outerRingWidth: 24, // Increased width
-              ),
-
+              // theme: const SpinWheelTheme(
+              //   segmentGradients: const [
+              //     RadialGradient(colors: [Color(0xFFFFD54F), Color(0xFFFF8F00)]), // Yellow 3D
+              //     RadialGradient(colors: [Color(0xFF81D4FA), Color(0xFF0277BD)]), // Light Blue 3D
+              //     RadialGradient(colors: [Color(0xFFF48FB1), Color(0xFFC2185B)]), // Pink 3D
+              //     RadialGradient(colors: [Color(0xFF4FC3F7), Color(0xFF01579B)]), // Dark Blue 3D
+              //     RadialGradient(colors: [Color(0xFFF8BBD0), Color(0xFFD81B60)]), // Light Pink 3D
+              //     RadialGradient(colors: [Color(0xFFE57373), Color(0xFFC62828)]), // Red 3D
+              //   ],
+              //   outerRingGradient: SweepGradient(
+              //     colors: [
+              //       Colors.purple,
+              //       Colors.deepPurple,
+              //     ],
+              //   ),
+              //   // outerRingWidth: 24, // Increased width
+              // ),
               showConfetti: true,
-              showWinnerPopup: true,
+              showWinnerPopup: false,
               spinButtonText: 'SPIN',
               spinButtonWidth: 160,
               // spinButtonStyle: ButtonStyle(
@@ -107,21 +128,184 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
               },
 
               onWinner: (item, index) {
-                // showDialog(
-                //     context: context,
-                //     builder: (context) {
-                //       return AlertDialog(
-                //           title: const Text('You Won!'),
-                //           content: Text('Your prize is: ${item.label}'),
-                //           actions: [
-                //             TextButton(
-                //               onPressed: () => Navigator.pop(context),
-                //               child: const Text('Awesome'),
-                //             )
-                //           ]
-                //       );
-                //     }
-                // );
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                    return Dialog(
+                      backgroundColor: Colors.transparent,
+                      insetPadding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Header
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.fromLTRB(20, 28, 20, 28),
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xFF4B2BA7),
+                                    Color(0xFFB51ED0),
+                                    Color(0xFFFF3672),
+                                    Color(0xFFFF9D32),
+                                  ],
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  // Check icon
+                                  Container(
+                                    width: 86,
+                                    height: 86,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white.withValues(alpha: 0.10),
+                                      border: Border.all(
+                                        color: Colors.white.withValues(alpha: 0.35),
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 55,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 20),
+
+                                  const Text(
+                                    'Congratulations!',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 8),
+
+                                  Text(
+                                    item.label,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: Colors.white.withValues(alpha: 0.85),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            // Reward section
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(28, 30, 28, 20),
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    'REWARD POINTS',
+                                    style: TextStyle(
+                                      color: Color(0xFF888888),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 8),
+
+
+
+                                  // Info box
+                                  Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 15,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFFFF9ED),
+                                      borderRadius: BorderRadius.circular(14),
+                                      border: Border.all(
+                                        color: const Color(0xFFFFE1A8),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Icon(
+                                          Icons.info_outline,
+                                          color: Color(0xFFE5A33A),
+                                          size: 24,
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Text(
+                                            'Your reward points will be credited to your '
+                                                'account after approval.',
+                                            style: const TextStyle(
+                                              color: Color(0xFFE5A33A),
+                                              fontSize: 15,
+                                              height: 1.4,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 28),
+
+                                  // Home button
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 48,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        // Navigate to home here
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.orange,
+                                        foregroundColor: Colors.white,
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'Continue',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
                 debugPrint('Winner: ${item.label}');
               },
               playSpinSound: () {},
