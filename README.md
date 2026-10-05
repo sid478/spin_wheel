@@ -1,5 +1,8 @@
 # Fortune Spin Wheel
 
+![Fortune Spin Wheel Demo 1](doc/spin1.gif)
+![Fortune Spin Wheel Demo 2](doc/spin_design2.gif)
+
 A reusable, highly customizable Flutter spin wheel for internal company apps.
 
 Inspired by the supplied reward-wheel design, but built as a configurable package so each app can change:
@@ -135,3 +138,7 @@ lib/
     painter/
       spin_wheel_painter.dart
 ```
+
+## Developed By
+
+![Developer](doc/developer.png)
