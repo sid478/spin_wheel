@@ -3,6 +3,7 @@
 ![Demo 1](https://raw.githubusercontent.com/sid478/spin_wheel/development/doc/spin1.gif)
 ![Demo 2](https://raw.githubusercontent.com/sid478/spin_wheel/development/doc/spin_design2.gif)
 ![Demo 3](https://raw.githubusercontent.com/sid478/spin_wheel/development/doc/spin_design3.gif)
+![Demo 4](https://raw.githubusercontent.com/sid478/spin_wheel/development/doc/spin_design4.png)
 
 A reusable, highly customizable Flutter spin wheel for internal company apps.
 
