@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:fortune_spin_wheel/fortune_spin_wheel.dart';
 
 void main() {
-  runApp( ExampleApp());
+  runApp(const ExampleApp());
 }
 
 class ExampleApp extends StatelessWidget {
-   ExampleApp({super.key});
+  const ExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  SpinDemoPage(),
+      home: const SpinDemoPage(),
     );
   }
 }
 
 class SpinDemoPage extends StatefulWidget {
-   SpinDemoPage({super.key});
+  const SpinDemoPage({super.key});
 
   @override
   State<SpinDemoPage> createState() => _SpinDemoPageState();
