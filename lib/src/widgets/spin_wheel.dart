@@ -61,6 +61,7 @@ class SpinWheel<T> extends StatefulWidget {
     this.outerBlinkerCount = 18,
     this.showBlinkDecoration = true,
     this.showDividers = true,
+    this.showOuterBorder = true,
     this.giftImageSize = 40.0,
     this.imageSizeFactor = .22,
     this.textRadiusFactor = .64,
@@ -121,6 +122,7 @@ class SpinWheel<T> extends StatefulWidget {
   final int outerBlinkerCount;
   final bool showBlinkDecoration;
   final bool showDividers;
+  final bool showOuterBorder;
 
   final double imageSizeFactor;
   final double textRadiusFactor;
@@ -379,6 +381,7 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
                   theme: widget.theme,
                   rotation: _rotation,
                   showDividers: widget.showDividers,
+                  showOuterBorder: widget.showOuterBorder,
                   showOuterSemiCircleRing: widget.showBlinkDecoration,
                   outerSemiCircleCount: widget.outerBlinkerCount,
                   outerRingDecoration: widget.outerRingDecoration,
@@ -395,11 +398,13 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
                       final sweep = 2 * math.pi / widget.items.length;
                       final angle = _rotation - math.pi / 2 + i * sweep + sweep / 2;
                       
+                      final segmentRadius = widget.showOuterBorder ? radius - widget.theme.outerRingWidth : radius;
+                      
                       final imageSize = item.imageSize ?? widget.giftImageSize;
                       // Place the image below the text (radially closer to the center)
-                      // Text is centered at radius * textRadiusFactor.
+                      // Text is centered at segmentRadius * textRadiusFactor.
                       // We subtract a dynamic offset based on the image size and text height.
-                      final double imageRadiusOffset = radius * widget.textRadiusFactor - (25.0 + imageSize / 2);
+                      final double imageRadiusOffset = segmentRadius * widget.textRadiusFactor - (25.0 + imageSize / 2);
                       
                       final imageCenter = Offset(
                         radius + imageRadiusOffset * math.cos(angle),
@@ -600,6 +605,7 @@ class _SpinWheelPainter<T> extends CustomPainter {
     required this.theme,
     required this.rotation,
     required this.showDividers,
+    required this.showOuterBorder,
     required this.showOuterSemiCircleRing,
     required this.outerSemiCircleCount,
     required this.outerRingDecoration,
@@ -612,6 +618,7 @@ class _SpinWheelPainter<T> extends CustomPainter {
   final SpinWheelTheme theme;
   final double rotation;
   final bool showDividers;
+  final bool showOuterBorder;
   final bool showOuterSemiCircleRing;
   final int outerSemiCircleCount;
   final SpinWheelOuterRingDecoration outerRingDecoration;
@@ -629,6 +636,8 @@ class _SpinWheelPainter<T> extends CustomPainter {
   }
 
   void _drawOuterRing(Canvas canvas, Offset center, double radius) {
+    if (!showOuterBorder) return;
+
     final ringPaint = Paint();
     if (theme.outerRingGradient != null) {
       ringPaint.shader = theme.outerRingGradient!.createShader(
@@ -702,7 +711,7 @@ class _SpinWheelPainter<T> extends CustomPainter {
   }
 
   void _drawSegments(Canvas canvas, Offset center, double radius) {
-    final segmentRadius = radius - theme.outerRingWidth;
+    final segmentRadius = showOuterBorder ? radius - theme.outerRingWidth : radius;
     final sweep = 2 * math.pi / items.length;
 
     for (var i = 0; i < items.length; i++) {

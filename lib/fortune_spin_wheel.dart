@@ -1,5 +1,5 @@
 /// A highly customizable Flutter spin wheel package for rewards, campaigns, games, and lucky draws.
-library fortune_spin_wheel;
+
 
 export 'src/controller/spin_wheel_controller.dart';
 export 'src/models/spin_item.dart';

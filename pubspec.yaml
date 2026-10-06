@@ -2,6 +2,8 @@ name: fortune_spin_wheel
 description: A highly customizable Flutter spin wheel package for rewards, campaigns, games, and lucky draws.
 version: 0.1.4
 repository: https://github.com/sid478/spin_wheel
+issue_tracker: https://github.com/sid478/spin_wheel/issues
+homepage: https://github.com/sid478/spin_wheel
 
 environment:
   sdk: ">=3.7.0 <4.0.0"

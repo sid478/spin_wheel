@@ -65,44 +65,86 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
           children: [
             SpinWheel<String>(
               showSpinButton: false,
-              showSpinCount: false,
+              // showSpinCount: false,
               controller: controller,
               showDividers: false,
               giftImageSize: 40.0,
               markerSize: 70,
               spinButtonColor: Colors.red,
-              maxSpinCount: 1,
+              maxSpinCount: 5,
               wheelSize: 390,
               items: items,
               outerBlinkerCount: 30,
               showBlinkDecoration: true,
               outerRingDecoration: SpinWheelOuterRingDecoration.star,
-              // marker: SpinWheelMarker(
-              //   type: SpinMarkerType.pin,
-              //   color: Colors.red,
-              //   borderColor: Colors.yellow,
-              //   size: 40,
-              // ),
+              marker: SpinWheelMarker(
+                type: SpinMarkerType.triangle,
+                color: Colors.red,
+                borderColor: Colors.yellow,
+                size: 50,
+              ),
               // marker:  Image.asset(),
               // marker: Icon(Icons.arrow_downward_sharp, size: 60, color: Colors.blueAccent)
-              // theme: const SpinWheelTheme(
-              //   segmentGradients: const [
-              //     RadialGradient(colors: [Color(0xFFFFD54F), Color(0xFFFF8F00)]), // Yellow 3D
-              //     RadialGradient(colors: [Color(0xFF81D4FA), Color(0xFF0277BD)]), // Light Blue 3D
-              //     RadialGradient(colors: [Color(0xFFF48FB1), Color(0xFFC2185B)]), // Pink 3D
-              //     RadialGradient(colors: [Color(0xFF4FC3F7), Color(0xFF01579B)]), // Dark Blue 3D
-              //     RadialGradient(colors: [Color(0xFFF8BBD0), Color(0xFFD81B60)]), // Light Pink 3D
-              //     RadialGradient(colors: [Color(0xFFE57373), Color(0xFFC62828)]), // Red 3D
-              //   ],
-              //   outerRingGradient: SweepGradient(
-              //     colors: [
-              //       Colors.purple,
-              //       Colors.deepPurple,
-              //     ],
-              //   ),
-              //   // outerRingWidth: 24, // Increased width
-              // ),
+              theme: const SpinWheelTheme(
+                segmentGradients: const [
+                  RadialGradient(
+                    colors: [
+                      Color(0xFFFFF9C4),
+                      Color(0xFFFFE082),
+                    ],
+                  ),
+
+                  RadialGradient(
+                    colors: [
+                      Color(0xFFE1F5FE),
+                      Color(0xFF81D4FA),
+                    ],
+                  ),
+
+                  RadialGradient(
+                    colors: [
+                      Color(0xFFFCE4EC),
+                      Color(0xFFF8BBD0),
+                    ],
+                  ),
+
+                  RadialGradient(
+                    colors: [
+                      Color(0xFFE3F2FD),
+                      Color(0xFF90CAF9),
+                    ],
+                  ),
+
+                  RadialGradient(
+                    colors: [
+                      Color(0xFFF3E5F5),
+                      Color(0xFFCE93D8),
+                    ],
+                  ),
+
+                  RadialGradient(
+                    colors: [
+                      Color(0xFFFFEBEE),
+                      Color(0xFFFFAB91),
+                    ],
+                  ),
+                  // RadialGradient(colors: [Color(0xFFFFD54F), Color(0xFFFF8F00)]), // Yellow 3D
+                  // RadialGradient(colors: [Color(0xFF81D4FA), Color(0xFF0277BD)]), // Light Blue 3D
+                  // RadialGradient(colors: [Color(0xFFF48FB1), Color(0xFFC2185B)]), // Pink 3D
+                  // RadialGradient(colors: [Color(0xFF4FC3F7), Color(0xFF01579B)]), // Dark Blue 3D
+                  // RadialGradient(colors: [Color(0xFFF8BBD0), Color(0xFFD81B60)]), // Light Pink 3D
+                  // RadialGradient(colors: [Color(0xFFE57373), Color(0xFFC62828)]), // Red 3D
+                ],
+                outerRingGradient: SweepGradient(
+                  colors: [
+                    Colors.purple,
+                    Colors.deepPurple,
+                  ],
+                ),
+                // outerRingWidth: 24, // Increased width
+              ),
               showConfetti: true,
+              showOuterBorder:false,
               showWinnerPopup: false,
               spinButtonText: 'SPIN',
               spinButtonWidth: 160,
