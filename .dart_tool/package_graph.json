@@ -5,7 +5,7 @@
   "packages": [
     {
       "name": "fortune_spin_wheel",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "dependencies": [
         "auto_size_text",
         "confetti",

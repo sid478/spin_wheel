@@ -1,4 +1,4 @@
-## 0.1.5
+## 0.1.6
 
 * Improve public API documentation.
 * Merge repository branches to fix pub.dev checks.
