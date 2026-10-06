@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:fortune_spin_wheel/fortune_spin_wheel.dart';
 
 void main() {
-  runApp(const ExampleApp());
+  runApp( ExampleApp());
 }
 
 class ExampleApp extends StatelessWidget {
-  const ExampleApp({super.key});
+   ExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const SpinDemoPage(),
+      home:  SpinDemoPage(),
     );
   }
 }
 
 class SpinDemoPage extends StatefulWidget {
-  const SpinDemoPage({super.key});
+   SpinDemoPage({super.key});
 
   @override
   State<SpinDemoPage> createState() => _SpinDemoPageState();
@@ -27,27 +27,27 @@ class SpinDemoPage extends StatefulWidget {
 class _SpinDemoPageState extends State<SpinDemoPage> {
   final controller = SpinWheelController();
   final List<SpinItem<String>> items = [
-    const SpinItem<String>(
+     SpinItem<String>(
       id: 1,
       label: '400 Points',
       image: 'https://cdn-icons-png.flaticon.com/512/4213/4213654.png',
     ),
-    const SpinItem<String>(
+     SpinItem<String>(
       id: 2,
       label: 'INR 100 Amazon Pay Gift Card',
       image: 'https://cdn-icons-png.flaticon.com/512/4228/4228674.png',
     ),
     //
-    const SpinItem<String>(id: 3, label: 'Better Luck Next Time',
+     SpinItem<String>(id: 3, label: 'Better Luck Next Time',
       // image: 'https://cdn-icons-png.flaticon.com/512/4213/4213650.png',
     ),
-    const SpinItem<String>(
+     SpinItem<String>(
       id: 4,
       label: '100 Points',
       image: 'https://cdn-icons-png.flaticon.com/512/4228/4228674.png',
     ),
 
-    const SpinItem<String>(
+     SpinItem<String>(
       id: 5,
       label: '200 Amazon Gift Card',
       image: 'https://cdn-icons-png.flaticon.com/512/4228/4228674.png',
@@ -58,7 +58,7 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: const Text('Spin Wheel')),
+      appBar: AppBar(title:  Text('Spin Wheel')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -85,8 +85,8 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
               // ),
               // marker:  Image.asset(),
               // marker: Icon(Icons.arrow_downward_sharp, size: 60, color: Colors.blueAccent)
-              theme: const SpinWheelTheme(
-                segmentGradients: const [
+              theme:  SpinWheelTheme(
+                segmentGradients:  [
                   RadialGradient(
                     colors: [
                       Color(0xFFFFF9C4),
@@ -176,7 +176,7 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
                   builder: (context) {
                     return Dialog(
                       backgroundColor: Colors.transparent,
-                      insetPadding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
+                      insetPadding:  EdgeInsets.symmetric(horizontal: 30,vertical: 20),
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -190,8 +190,8 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
                             // Header
                             Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.fromLTRB(20, 28, 20, 28),
-                              decoration: const BoxDecoration(
+                              padding:  EdgeInsets.fromLTRB(20, 28, 20, 28),
+                              decoration:  BoxDecoration(
                                 gradient: LinearGradient(
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -217,16 +217,16 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
                                         width: 2,
                                       ),
                                     ),
-                                    child: const Icon(
+                                    child:  Icon(
                                       Icons.check,
                                       color: Colors.white,
                                       size: 55,
                                     ),
                                   ),
 
-                                  const SizedBox(height: 20),
+                                   SizedBox(height: 20),
 
-                                  const Text(
+                                   Text(
                                     'Congratulations!',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -236,7 +236,7 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
                                     ),
                                   ),
 
-                                  const SizedBox(height: 8),
+                                   SizedBox(height: 8),
 
                                   Text(
                                     item.label,
@@ -255,10 +255,10 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
 
                             // Reward section
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(28, 30, 28, 20),
+                              padding:  EdgeInsets.fromLTRB(28, 30, 28, 20),
                               child: Column(
                                 children: [
-                                  const Text(
+                                   Text(
                                     'REWARD POINTS',
                                     style: TextStyle(
                                       color: Color(0xFF888888),
@@ -268,38 +268,38 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
                                     ),
                                   ),
 
-                                  const SizedBox(height: 8),
+                                   SizedBox(height: 8),
 
 
 
                                   // Info box
                                   Container(
                                     width: double.infinity,
-                                    padding: const EdgeInsets.symmetric(
+                                    padding:  EdgeInsets.symmetric(
                                       horizontal: 16,
                                       vertical: 15,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFFFFF9ED),
+                                      color:  Color(0xFFFFF9ED),
                                       borderRadius: BorderRadius.circular(14),
                                       border: Border.all(
-                                        color: const Color(0xFFFFE1A8),
+                                        color:  Color(0xFFFFE1A8),
                                       ),
                                     ),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        const Icon(
+                                         Icon(
                                           Icons.info_outline,
                                           color: Color(0xFFE5A33A),
                                           size: 24,
                                         ),
-                                        const SizedBox(width: 12),
+                                         SizedBox(width: 12),
                                         Expanded(
                                           child: Text(
                                             'Your reward points will be credited to your '
                                                 'account after approval.',
-                                            style: const TextStyle(
+                                            style:  TextStyle(
                                               color: Color(0xFFE5A33A),
                                               fontSize: 15,
                                               height: 1.4,
@@ -311,7 +311,7 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
                                     ),
                                   ),
 
-                                  const SizedBox(height: 28),
+                                   SizedBox(height: 28),
 
                                   // Home button
                                   SizedBox(
@@ -330,7 +330,7 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                       ),
-                                      child: const Text(
+                                      child:  Text(
                                         'Continue',
                                         style: TextStyle(
                                           fontSize: 20,
