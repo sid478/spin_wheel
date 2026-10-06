@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 enum SpinMarkerType {
   triangle,
   pin,
+  ribbon,
 }
 
 class SpinWheelMarker extends StatelessWidget {
@@ -71,6 +72,10 @@ class _MarkerPainter extends CustomPainter {
           ..cubicTo(w, 0, w, h * .25, w / 2, h)
           ..close();
         path.close();
+        break;
+      case SpinMarkerType.ribbon:
+        _drawRibbonMarker(canvas, size);
+        return;
     }
 
     final fill = Paint()..color = color;
@@ -157,6 +162,64 @@ class _MarkerPainter extends CustomPainter {
       canvas.drawPath(rightFacet, Paint()..color = darkYellow);
     }
   }
+
+  void _drawRibbonMarker(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    final topY = h * 0.1;
+    final bottomY = h * 0.95;
+
+    final mainHalfWidth = w * 0.3;
+    final foldExt = w * 0.15;
+    final foldDrop = h * 0.4;
+
+    final pMainTopLeft = Offset(w / 2 - mainHalfWidth, topY);
+    final pMainTopRight = Offset(w / 2 + mainHalfWidth, topY);
+    final pMainBottom = Offset(w / 2, bottomY);
+
+    final pLeftFoldOuter = Offset(w / 2 - mainHalfWidth - foldExt, topY);
+    final leftEdgeFraction = foldDrop / (bottomY - topY);
+    final pLeftFoldBottom = Offset(
+      pMainTopLeft.dx + (pMainBottom.dx - pMainTopLeft.dx) * leftEdgeFraction,
+      pMainTopLeft.dy + (pMainBottom.dy - pMainTopLeft.dy) * leftEdgeFraction,
+    );
+
+    final pRightFoldOuter = Offset(w / 2 + mainHalfWidth + foldExt, topY);
+    final rightEdgeFraction = foldDrop / (bottomY - topY);
+    final pRightFoldBottom = Offset(
+      pMainTopRight.dx + (pMainBottom.dx - pMainTopRight.dx) * rightEdgeFraction,
+      pMainTopRight.dy + (pMainBottom.dy - pMainTopRight.dy) * rightEdgeFraction,
+    );
+
+    final leftFoldPath = Path()
+      ..moveTo(pLeftFoldOuter.dx, pLeftFoldOuter.dy)
+      ..lineTo(pMainTopLeft.dx, pMainTopLeft.dy)
+      ..lineTo(pLeftFoldBottom.dx, pLeftFoldBottom.dy)
+      ..close();
+
+    final rightFoldPath = Path()
+      ..moveTo(pRightFoldOuter.dx, pRightFoldOuter.dy)
+      ..lineTo(pMainTopRight.dx, pMainTopRight.dy)
+      ..lineTo(pRightFoldBottom.dx, pRightFoldBottom.dy)
+      ..close();
+
+    final mainPath = Path()
+      ..moveTo(pMainTopLeft.dx, pMainTopLeft.dy)
+      ..lineTo(pMainTopRight.dx, pMainTopRight.dy)
+      ..lineTo(pMainBottom.dx, pMainBottom.dy)
+      ..close();
+
+    final foldPaint = Paint()..color = borderColor;
+    final mainPaint = Paint()..color = color;
+
+    canvas.drawPath(leftFoldPath, foldPaint);
+    canvas.drawPath(rightFoldPath, foldPaint);
+    
+    canvas.drawShadow(mainPath, Colors.black, 2, false);
+    canvas.drawPath(mainPath, mainPaint);
+  }
+
 
   @override
   bool shouldRepaint(covariant _MarkerPainter oldDelegate) {

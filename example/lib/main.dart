@@ -77,12 +77,12 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
               outerBlinkerCount: 30,
               showBlinkDecoration: true,
               outerRingDecoration: SpinWheelOuterRingDecoration.star,
-              marker: SpinWheelMarker(
-                type: SpinMarkerType.triangle,
-                color: Colors.red,
-                borderColor: Colors.yellow,
-                size: 50,
-              ),
+              // marker: SpinWheelMarker(
+              //   type: SpinMarkerType.ribbon,
+              //   color: Colors.red,
+              //   borderColor: Colors.yellow,
+              //   size: 50,
+              // ),
               // marker:  Image.asset(),
               // marker: Icon(Icons.arrow_downward_sharp, size: 60, color: Colors.blueAccent)
               theme: const SpinWheelTheme(
@@ -137,7 +137,7 @@ class _SpinDemoPageState extends State<SpinDemoPage> {
                 ],
                 outerRingGradient: SweepGradient(
                   colors: [
-                    Colors.purple,
+                    Colors.deepPurpleAccent,
                     Colors.deepPurple,
                   ],
                 ),

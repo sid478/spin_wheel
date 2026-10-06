@@ -460,7 +460,7 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
                 ),
               ),
             ),
-            Positioned(top: -widget.markerSize * .10, child: widget.marker),
+            Positioned(top: -widget.markerSize * .2, child: widget.marker),
           ],
         ),
       ),
