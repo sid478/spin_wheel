@@ -31,7 +31,7 @@ class SpinWheel<T> extends StatefulWidget {
     this.spinDuration = const Duration(seconds: 5),
     this.minimumTurns = 5,
     this.showCenterButton = true,
-    this.centerBuilder,
+    this.centerWidget,
     this.showConfetti = true,
     this.showWinnerPopup = true,
     this.winnerPopupTitle = 'Congratulations!',
@@ -81,7 +81,7 @@ class SpinWheel<T> extends StatefulWidget {
   final int minimumTurns;
 
   final bool showCenterButton;
-  final Widget? centerBuilder;
+  final Widget? centerWidget;
 
   final bool showConfetti;
   final bool showWinnerPopup;
@@ -448,7 +448,7 @@ class _SpinWheelState<T> extends State<SpinWheel<T>>
                     Center(
                       child:
                           widget.showCenterButton
-                              ? (widget.centerBuilder ??
+                              ? (widget.centerWidget ??
                                   _DefaultCenter(
                                     color: widget.theme.centerColor,
                                     borderColor: widget.theme.centerBorderColor,
